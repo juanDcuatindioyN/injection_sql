@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema Universitario</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            border-bottom: 2px solid #e5e7eb;
+            background: white;
+            padding: 10px 20px 0;
+            border-radius: 8px 8px 0 0;
+        }
+        .tab-button {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #4b5563;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .tab-button:hover {
+            color: #003366;
+            background: #f3f4f6;
+            border-radius: 6px 6px 0 0;
+        }
+        .tab-button.active {
+            color: #003366;
+            border-bottom-color: #003366;
+            font-weight: 700;
+            background: #f9fafb;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Sistema Universitario</h1>
+            <nav class="nav">
+                <span class="user-info">Usuario: <%= username %></span>
+                <a href="/logout" class="nav-link logout">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <% if (error) { %>
+            <div class="alert alert-error">
+                <strong>Error SQL:</strong> <%= error %>
+            </div>
+        <% } %>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'estudiantes')">Estudiantes</button>
+            <button class="tab-button" onclick="openTab(event, 'cursos')">Cursos</button>
+            <button class="tab-button" onclick="openTab(event, 'notas')">Notas</button>
+        </div>
+
+        <div id="estudiantes" class="tab-content active">
+            <section class="data-section">
+                <div class="section-header">
+                    <h2>Estudiantes</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Programa</th>
+                                <th>Semestre</th>
+                                <th>Email</th>
+                                <th>Celular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (estudiantes.length > 0) { %>
+                                <% estudiantes.forEach(est => { %>
+                                <tr>
+                                    <td><%= est.id %></td>
+                                    <td><%= est.codigo_estudiante %></td>
+                                    <td><%= est.nombres %></td>
+                                    <td><%= est.apellidos %></td>
+                                    <td><%= est.programa_academico %></td>
+                                    <td><%= est.semestre %></td>
+                                    <td><%= est.email_institucional %></td>
+                                    <td><%= est.celular %></td>
+                                </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr><td colspan="8" class="no-data">No hay datos disponibles</td></tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div id="cursos" class="tab-content">
+            <section class="data-section">
+                <div class="section-header">
+                    <h2>Cursos</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Código</th>
+                                <th>Asignatura</th>
+                                <th>Área</th>
+                                <th>Créditos</th>
+                                <th>Horas/Semana</th>
+                                <th>Docente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (cursos.length > 0) { %>
+                                <% cursos.forEach(curso => { %>
+                                <tr>
+                                    <td><%= curso.id %></td>
+                                    <td><%= curso.codigo_curso %></td>
+                                    <td><%= curso.nombre_asignatura %></td>
+                                    <td><%= curso.area_conocimiento %></td>
+                                    <td><%= curso.numero_creditos %></td>
+                                    <td><%= curso.horas_semanales %></td>
+                                    <td><%= curso.docente_titular %></td>
+                                </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr><td colspan="7" class="no-data">No hay datos disponibles</td></tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div id="notas" class="tab-content">
+            <section class="data-section">
+                <div class="section-header">
+                    <h2>Notas</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Estudiante</th>
+                                <th>Curso</th>
+                                <th>Corte 1</th>
+                                <th>Corte 2</th>
+                                <th>Corte 3</th>
+                                <th>Nota Final</th>
+                                <th>Periodo</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (notas.length > 0) { %>
+                                <% notas.forEach(nota => { %>
+                                <tr>
+                                    <td><%= nota.id %></td>
+                                    <td><%= nota.estudiante_nombre %> <%= nota.estudiante_apellido %></td>
+                                    <td><%= nota.curso_nombre %></td>
+                                    <td><%= nota.corte1 %></td>
+                                    <td><%= nota.corte2 %></td>
+                                    <td><%= nota.corte3 %></td>
+                                    <td><%= nota.nota_final %></td>
+                                    <td><%= nota.periodo_academico %></td>
+                                    <td><%= nota.estado %></td>
+                                </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr><td colspan="9" class="no-data">No hay datos disponibles</td></tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

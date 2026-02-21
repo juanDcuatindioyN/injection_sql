@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema Universitario</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Sistema Universitario</h1>
+                <p>Acceso al portal académico</p>
+            </div>
+            
+            <% if (error) { %>
+                <div class="alert alert-error"><%= error %></div>
+            <% } %>
+            
+            <form method="POST" action="/login">
+                <div class="input-group">
+                    <label>Usuario</label>
+                    <input type="text" name="username" placeholder="Ingresa tu usuario" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

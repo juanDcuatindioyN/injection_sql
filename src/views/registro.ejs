@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Sistema Universitario</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Crear Cuenta</h1>
+                <p>Regístrate en el sistema</p>
+            </div>
+            
+            <% if (error) { %>
+                <div class="alert alert-error"><%= error %></div>
+            <% } %>
+            
+            <% if (success) { %>
+                <div class="alert alert-success"><%= success %></div>
+            <% } %>
+            
+            <form method="POST" action="/registro">
+                <div class="input-group">
+                    <label>Usuario</label>
+                    <input type="text" name="username" placeholder="Elige un nombre de usuario" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" placeholder="Crea una contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
