@@ -1,9 +1,3 @@
-# Guía de Pruebas - SQL Injection
-
-Este documento contiene los ejemplos más importantes de SQL Injection para demostración educativa.
-
----
-
 ## 1. Authentication Bypass (Bypass de Login)
 
 ### Método 1: Comentario SQL
